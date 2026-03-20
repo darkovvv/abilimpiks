@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Услуги Мастера - Обмен навыками</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="#" class="logo">Услуги Мастера</a>
+                
+                <nav class="nav">
+                    <a href="#" class="nav-link active" data-page="home">Главная</a>
+                    <a href="#" class="nav-link" data-page="services">Услуги</a>
+                    <a href="#" class="nav-link" data-page="masters">Мастера</a>
+                    <a href="#" class="nav-link" data-page="cart">Корзина</a>
+                </nav>
+
+                <div class="header-controls">
+                    <button class="theme-toggle" id="themeToggle" title="Переключить тему">🌙</button>
+                    <button class="accessibility-toggle" id="accessibilityToggle" title="Увеличить текст">👁️</button>
+                    <div class="auth-controls">
+                        <button class="btn btn-outline" id="loginBtn">Вход</button>
+                        <button class="btn btn-primary" id="registerBtn">Регистрация</button>
+                        <button class="btn btn-logout" id="logoutBtn" style="display:none;">Выход</button>
+                        <button class="btn btn-outline" id="adminBtn" style="display:none;">Админ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <section id="home" class="page active">
+                <div class="hero">
+                    <h1>Обмен Навыками и Услугами</h1>
+                    <p>Предложи свои знания, получи нужные услуги</p>
+                </div>
+
+                <div class="slider">
+                    <div class="slider-container">
+                        <div class="slide active">
+                            <div class="slide-content">
+                                <h6>Ремонт техники</h6>
+                                <h5>Профессиональный ремонт любых устройств</h5>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="slide-content">
+                                <h6>Обучение</h6>
+                                <h5>Изучи новые навыки от опытных мастеров</h5>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <div class="slide-content">
+                                <h6>Дизайн</h6>
+                                <h5>Создание уникального дизайна для вашего проекта</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="slider-btn prev" id="sliderPrev">❮</button>
+                    <button class="slider-btn next" id="sliderNext">❯</button>
+                    <div class="slider-dots" id="sliderDots"></div>
+                </div>
+
+                <section class="masters-section">
+                    <h2>Наши мастера</h2>
+                    <div class="grid" id="mastersList"></div>
+                </section>
+
+                <div class="card card-admin mt-xl">
+                    <h3>Последние новости</h3>
+                    <div class="news-item">
+                        <details>
+                            <summary>Новое обновление платформы</summary>
+                            <p>Мы добавили новые функции для удобства пользователей. Теперь вы можете легче находить нужных мастеров.</p>
+                        </details>
+                    </div>
+                </div>
+            </section>
+
+            <section id="services" class="page">
+                <h1>Услуги</h1>
+                
+                <div class="services-layout">
+                    <aside class="sidebar">
+                        <div class="card card-admin">
+                            <h3>Фильтр по категориям</h3>
+                            <details open>
+                                <summary>Категории</summary>
+                                <div class="filter-options" id="filterOptions"></div>
+                            </details>
+                        </div>
+
+                        <div class="card card-admin">
+                            <h3>Место оказания услуги</h3>
+                            <div class="map-container">
+                                <svg viewBox="0 0 400 300" class="map-svg">
+                                    <rect width="400" height="300" fill="var(--bg-main)"/>
+                                    <circle cx="200" cy="150" r="100" fill="none" stroke="var(--text-secondary)" stroke-width="2" opacity="0.3"/>
+                                </svg>
+                                <div class="map-marker" id="mapMarker" style="left: 50%; top: 50%;"></div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <div class="services-main">
+                        <div class="grid" id="servicesList"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="masters" class="page">
+                <h1>Мастера</h1>
+                <div class="grid" id="mastersDetail"></div>
+            </section>
+
+            <section id="cart" class="page">
+                <h1>Корзина</h1>
+                <div class="cart-container">
+                    <div class="cart-items" id="cartItems"></div>
+                    <div class="card card-admin cart-summary">
+                        <h2>Итого</h2>
+                        <p id="cartTotal">Услуг в корзине: 0</p>
+                        <button class="btn btn-primary btn-large">Подтвердить</button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="loginModal" class="modal">
+        <div class="auth-box">
+            <span class="modal-close">&times;</span>
+            <h2>Вход в аккаунт</h2>
+            <form id="loginForm">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Пароль" required>
+                <button type="submit" class="btn btn-primary btn-full">Войти</button>
+            </form>
+            <p>Нет аккаунта? <a href="#" id="switchToRegister">Зарегистрируйтесь</a></p>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="auth-box">
+            <span class="modal-close">&times;</span>
+            <h2>Регистрация</h2>
+            <form id="registerForm">
+                <input type="text" id="regFirstName" placeholder="Имя" required>
+                <input type="text" id="regLastName" placeholder="Фамилия" required>
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <input type="tel" id="regPhone" placeholder="Телефон" required>
+                <input type="text" id="regAddress" placeholder="Адрес" required>
+                <input type="password" id="regPassword" placeholder="Пароль (мин. 8 симв.)" required minlength="8">
+                <input type="password" id="regPasswordConfirm" placeholder="Подтверждение пароля" required>
+                <button type="submit" class="btn btn-primary btn-full">Создать аккаунт</button>
+            </form>
+            <p>Уже есть аккаунт? <a href="#" id="switchToLogin">Войдите</a></p>
+        </div>
+    </div>
+
+    <div id="adminModal" class="modal modal-large">
+        <div class="card card-admin modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Админ-панель</h2>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-tab="services-list">Услуги</button>
+                <button class="admin-tab-btn" data-tab="create-service">Создать услугу</button>
+            </div>
+
+            <div id="services-list" class="admin-tab active">
+                <h3>Управление услугами</h3>
+                <div class="admin-services-table" id="adminServicesList"></div>
+            </div>
+
+            <div id="create-service" class="admin-tab">
+                <h3>Создать новую услугу</h3>
+                <form id="createServiceForm">
+                    <input type="text" id="serviceName" placeholder="Название" required>
+                    <textarea id="serviceDescription" rows="4" placeholder="Описание" required></textarea>
+                    <select id="serviceCategory" required>
+                        <option value="">Выберите категорию</option>
+                        <option value="repair">Ремонт</option>
+                        <option value="education">Обучение</option>
+                        <option value="design">Дизайн</option>
+                        <option value="consultation">Консультация</option>
+                        <option value="help">Помощь</option>
+                    </select>
+                    <input type="text" id="serviceMaster" placeholder="Мастер" required>
+                    <input type="text" id="serviceAddress" placeholder="Адрес" required>
+                    <button type="submit" class="btn btn-primary btn-full">Создать услугу</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="editServiceModal" class="modal">
+        <div class="card card-admin">
+            <span class="modal-close">&times;</span>
+            <h2>Редактировать услугу</h2>
+            <form id="editServiceForm">
+                <input type="hidden" id="editServiceId">
+                <input type="text" id="editServiceName" placeholder="Название" required>
+                <textarea id="editServiceDescription" rows="4" placeholder="Описание" required></textarea>
+                <select id="editServiceCategory" required>
+                    <option value="repair">Ремонт</option>
+                    <option value="education">Обучение</option>
+                    <option value="design">Дизайн</option>
+                    <option value="consultation">Консультация</option>
+                    <option value="help">Помощь</option>
+                </select>
+                <input type="text" id="editServiceMaster" placeholder="Мастер" required>
+                <input type="text" id="editServiceAddress" placeholder="Адрес" required>
+                <button type="submit" class="btn btn-primary btn-full">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-copy">
+                Услуги Мастера © 2025
+            </div>
+            <div class="footer-links">
+                <a href="https://vk.com" target="_blank">VK</a>
+                <a href="https://t.me" target="_blank">Telegram</a>
+                <a href="https://rutube.ru" target="_blank">RuTube</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="data/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
